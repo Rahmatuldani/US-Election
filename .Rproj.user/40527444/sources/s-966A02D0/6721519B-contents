@@ -1,0 +1,192 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+source("Data&Clasifier/data.R")
+source("Data&Clasifier/lexicon.R")
+
+library(shiny)
+library(shinydashboard)
+# Define UI for application that draws a histogram
+
+ui<-shinyUI(
+    dashboardPage(
+        dashboardHeader(title = "US Election",
+                        dropdownMenu(type = "message",
+                                     messageItem(from = "Finance update",message = "we are on threshold"),
+                                     messageItem(from = "Sales",message = "sales at 50%",icon = icon ("bar-chart"),time="22.00")
+                        )),
+        
+        dashboardSidebar(
+            sliderInput("bins","Number Of Breaks",1,100,50),
+            sidebarMenu(
+                menuItem("Dashboard",tabName = "Dashboard",icon = icon("dashboard")),
+                menuSubItem("Trump",tabName = "trump"),
+                menuSubItem("Clinton",tabName = "clinton"),
+                menuItem("Analysis",tabName = "analisis"),
+                menuItem("Raw Data",tabName = "raw")
+            )),
+        dashboardBody(
+            tabItems(
+                tabItem(tabName = "Dashboard",
+                        fluidRow(
+                            box(title = "Tweet Retweet",
+                                solidHeader = T,
+                                width = 12,
+                                collapsible = T,
+                                plotOutput("ggplot")),
+                            box(title = "Sentimen Postiive & Negative",
+                                solidHeader = T,
+                                width = 12,
+                                collapsible = T,
+                                plotOutput("sen")),
+                            box(title = "Sentimen Postiive & Negative",
+                                solidHeader = T,
+                                width = 12,
+                                collapsible = T,
+                                plotOutput("sentboth")),
+                            box(title = "Sentimen",
+                                solidHeader = T,
+                                width = 12,
+                                collapsible = T,
+                                plotOutput("sent123"))
+                            
+                        
+      
+                            
+                            
+                        )),
+                tabItem(tabName = "trump",
+                        fluidRow(
+                                 box(title = "Word trump",
+                                     solidHeader = T,
+                                     width = 6,
+                                     collapsible = T,
+                                     plotOutput("trump")),
+                                 box(title = "WordCloud Trump",
+                                     solidHeader = T,
+                                     width = 6,
+                                     collapsible = T,
+                                     wordcloud2Output ("cloudtrump")),
+                                 box(title = "Big grams",
+                                     solidHeader = T,
+                                     width = 6,
+                                     collapsible = T,
+                                     plotOutput("trumpsgrams"))
+                                
+                                
+                )),
+                tabItem(tabName = "clinton",
+                        fluidRow(
+                                 box(title = "Word clinton",
+                                     solidHeader = T,
+                                     width = 6,
+                                     collapsible = T,
+                                     plotOutput("clinton")),
+                                 box(title = "WordCloud Clinton",
+                                     solidHeader = T,
+                                     width = 6,
+                                     collapsible = T,
+                                     wordcloud2Output ("cloudclinton")),
+                                 box(title = "Big grams",
+                                     solidHeader = T,
+                                     width = 6,
+                                     collapsible = T,
+                                     plotOutput("clintongrams"))
+                )),
+                tabItem(tabName = "raw",
+                        fluidRow(
+                            box(title = "Raw-data",
+                                 solidHeader = T,
+                                 width = 12,
+                                 collapsible = T,
+                                 tableOutput("rawdata"))
+                        )),
+                tabItem(tabName = "analisis",
+                        fluidRow(
+                          box(title = "Analisis",
+                              solidHeader = T,
+                              width = 12,
+                              collapsible = T,
+                              tableOutput("analisiss"))
+                        ))
+            )
+            
+        )
+    )
+)
+
+
+
+
+server <- shinyServer(function(input, output){
+    
+    output$ggplot <- renderPlot({
+        p1 <- tweets %>% filter(original_author != "") %>% group_by(original_author) %>% count() %>% filter(n>=5) %>% arrange(desc(n)) %>% ungroup()
+        ggplot(p1, aes(x=reorder(original_author, n), y=n)) +
+            geom_bar(stat="identity", fill="darkgreen") + coord_flip() +
+            labs(x="", y="number of tweets retweeted by either Trump or Clinton") +
+            theme(legend.position = "none")
+        }) 
+    
+    output$rawdata <- renderTable({
+        datantah
+    })
+    
+    output$trump <- renderPlot({
+        TrumpDF <- data.frame(word=names(TermFreqTrump), count=TermFreqTrump)
+        
+        TrumpDF[1:20,] %>%
+            ggplot(aes(x=(reorder(word, count)), y=count)) +
+            geom_bar(stat='identity', fill="blue") + coord_flip() + theme(legend.position = "none") +
+            labs(x="")
+    }) 
+    output$clinton <- renderPlot({
+        
+        
+        ClintonDF <- data.frame(word=names(TermFreqClinton), count=TermFreqClinton)
+        
+        ClintonDF[1:20,] %>%
+            ggplot(aes(x=(reorder(word, count)), y=count)) +
+            geom_bar(stat='identity', fill="#FF1493") + coord_flip() + theme(legend.position = "none") +
+            labs(x="")
+    }) 
+    
+    
+    
+    output$cloudtrump <- renderPlot({
+        wordcloudtrump
+    })
+    output$cloudclinton <- renderPlot({
+        wordcloudclinton
+    })
+    output$trumpsgrams <- renderPlot({
+        grid.arrange(b1, b2, nrow=1)
+    })
+    output$clintongrams <- renderPlot({
+        grid.arrange(b1c, b2c, nrow=1)
+    })
+    output$sen <- renderPlot({
+        grid.arrange(b1s, b2s, nrow=1)
+    })
+    output$sentboth <- renderPlot({
+        grid.arrange(t1,t2, nrow=1)
+    })
+    output$sent123 <- renderPlot({
+        grid.arrange(n1,n2, nrow=1)
+    })
+    output$analisiss <- renderTable({
+      Nrc
+    })
+    
+       
+    
+})
+
+
+# Run the application 
+shinyApp(ui = ui, server = server)

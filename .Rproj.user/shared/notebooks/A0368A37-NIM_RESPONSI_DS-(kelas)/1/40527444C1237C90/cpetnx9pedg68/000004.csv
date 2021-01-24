@@ -1,0 +1,8 @@
+"0","user_reviews_nrc <- tidy_user_reviews %>% "
+"0","  inner_join(joining_data) %>%"
+"0","  group_by(App) %>%"
+"0","  count(sentiment, sort = TRUE) %>%"
+"0","  spread(nrc_n, n, fill = 0) %>%"
+"0","  ungroup()"
+"2","Joining, by = c(""App"", ""Category"", ""Rating"", ""Reviews"", ""Size"", ""Installs"", ""Type"", ""Price"", ""Content Rating"", ""Genres"", ""Last Updated"", ""Current Ver"", ""Android Ver"", ""Sentiment"", ""Sentiment_Polarity"", ""Sentiment_Subjectivity"")
+"

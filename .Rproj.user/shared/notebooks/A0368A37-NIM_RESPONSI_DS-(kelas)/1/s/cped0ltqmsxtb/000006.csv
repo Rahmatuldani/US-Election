@@ -1,0 +1,10 @@
+"0","user_reviews_nrc <- tidy_user_reviews %>% "
+"0","  inner_join(nrc_n) %>%"
+"0","  group_by(App) %>%"
+"0","  count(nrc_n, sort = TRUE) %>%"
+"0","  spread(App, n, fill = 0) %>%"
+"0","  ungroup()"
+"2","Error: `by` must be supplied when `x` and `y` have no common variables.
+[34mi[39m use by = character()` to perform a cross-join.
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

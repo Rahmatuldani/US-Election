@@ -1,0 +1,12 @@
+"0","mean <- function() {"
+"0","  "
+"0","  googleplays  %>% group_by(Category) %>% summarise(average = mean(Rating))"
+"0","}"
+"0",""
+"0","rata <- mean()"
+"2","Error: Problem with `summarise()` input `average`.
+[31mx[39m unused argument (Rating)
+[34mi[39m Input `average` is `mean(Rating)`.
+[34mi[39m The error occurred in group 1: Category = ""ART_AND_DESIGN"".
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

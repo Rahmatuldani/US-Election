@@ -1,0 +1,13 @@
+"0","user_reviews_nrc <- tidy_user_reviews %>% "
+"0","  group_by(App) %>%"
+"0","  count(Category, sort = TRUE) %>%"
+"0","  spread(nrc_n, n, fill = 0) %>%"
+"0","  ungroup()"
+"2","Error: Must extract column with a single valid subscript.
+[31mx[39m Subscript `var` has the wrong type `tbl_df<
+  sentiment: character
+  n        : integer
+>`.
+[34mi[39m It must be numeric or character.
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

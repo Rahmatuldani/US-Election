@@ -1,0 +1,4 @@
+"0","joining_data <- user_reviews %>%"
+"0","  inner_join(googleplaystore)"
+"2","Joining, by = ""App""
+"

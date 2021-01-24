@@ -1,0 +1,73 @@
+library(shiny)
+library(shinydashboard)
+
+importPackage <- function() {
+  library(stringr)
+  library(sentimentr)
+  library(dplyr)
+  library(caret)
+  library(tm)
+  library(naivebayes)
+  library(wordcloud)
+  library(plotrix)
+  library(here)
+  library(vroom)
+}
+
+# Import package
+importPackage()
+
+tweets <- function() {
+  tweets <- vroom(here("data-raw","tweets.csv"))
+}
+
+# Authenticate Twitter API
+tweets()
+
+ui<-shinyUI(
+  dashboardPage(
+    dashboardHeader(title = "US Election",
+                    dropdownMenu(type = "message",
+                                 messageItem(from = "Finance update",message = "we are on threshold"),
+                                 messageItem(from = "Sales",message = "sales at 50%",icon = icon ("bar-chart"),time="22.00")
+                    )),
+    
+    dashboardSidebar(
+      sliderInput("bins","Number Of Breaks",1,100,50),
+      sidebarMenu(
+        menuItem("Dashboard",tabName = "Dashboard",icon = icon("dashboard")),
+        menuSubItem("Trump",tabName = "finance"),
+        menuSubItem("Clinton",tabName = "sales"),
+        menuItem("Analysis"),
+        menuItem("Raw Data")
+      )),
+    dashboardBody(
+      tabItems(
+        tabItem(tabName = "Dashboard",
+                fluidRow(
+                  box(plotOutput("histogram"))
+                  
+                )),
+        tabItem(tabName = "finance",
+                h1("Finance Dashboard")
+        ),
+        tabItem(tabName = "sales",
+                h2("sales")
+        )
+      )
+      
+    )
+  )
+)
+
+
+
+server <- shinyServer(function(input, output){
+  
+  output$histogram <- renderPlot({
+    hist(tweets$handle,breaks = input$bins)
+  })
+})
+
+
+shinyApp(ui = ui, server = server)

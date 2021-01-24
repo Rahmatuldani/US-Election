@@ -1,0 +1,58 @@
+---
+title: "US_election"
+author: "Jerrycho 123180036"
+date: "1/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(knitr)
+library(tidyr)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(tibble)
+library(stringr)
+library(gridExtra)
+library(scales)
+library(lubridate)
+library(ggrepel)
+library(reshape2)
+library(kableExtra)
+library(tm)
+library(wordcloud)
+library(topicmodels)
+library(tidytext)
+library(broom)
+```
+```{r}
+biden <- read.csv(file = "D:/ML/hashtag_joebiden.csv", header = T)
+head(biden)
+```
+```{r}
+trump <- read.csv(file = "D:/ML/hashtag_donaldtrump.csv", header = T)
+head(trump)
+```
+# Explorating Data Analysis (EDA)
+## ymd_hms
+untuk mengubah tipe data pada kolom created_at digunakan fungsi ymd_hms
+```{r}
+biden$created_at <- ymd_hms(biden$created_at)
+glimpse(biden)
+```
+```{r}
+trump$created_at <- ymd_hms(trump$created_at)
+glimpse(trump)
+```
+
+

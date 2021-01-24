@@ -1,0 +1,67 @@
+---
+title: "Tugas TIDYVERSE"
+author: "Jerrycho 123180036"
+date: "12/8/2020"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Penggunaan paket dplyr dan dataset “US murders”.
+
+```{r}
+library(dplyr)
+library(dslabs)
+data(murders)
+```
+1. Tambahkan kolom baru dengan nama ‘rate’ menggunakan fungsi mutate pada paket
+dplyr seperti pada contoh kode di bawah ini.
+
+```{r}
+rate  <- mutate(murders, rate = population / 10^6)
+print(rate)
+```
+2. rank(x) menghasilkan pemeringkatan ‘x’ dari nilai terendah ke tertinggi. Gunakan fungsi
+mutate untuk menambahkan kolom baru yang berisi hasil pemeringkatan dari nilai tingkat
+pembunuhan tertinggi ke terendah.
+```{r}
+murders <- mutate(murders, rank = rank(desc(total)))
+print(murders)
+```
+3. Dengan dplyr, kita dapat menggunakan fungsi select untuk menampilkan kolom
+tertentu saja. Misalnya dengan contoh script ini, kita hanya akan menampilkan kolom state
+dan population:
+```{r}
+select(murders, state, abb) %>% head()
+```
+4. Gunakan filter untuk menampilkan 5 negara bagian teratas dengan tingkat pembunuhan
+tertinggi.
+```{r}
+murders %>% arrange(desc(total)) %>% top_n(5, total)
+```
+5. Buat script yang dapat menampilkan hasil sesuai kondisi berikut: seseorang ingin tinggal
+di regional Northeast atau West dan ingin calon tempat tinggal yang dipilih memiliki tingkat
+pembunuhan kurang dari 1.
+Gunakan filter untuk hanya menampilkan hasil yang terdiri dari: state, rate, dan
+peringkatnya.
+```{r}
+murders %>% mutate(rate = total/population*100000) %>% filter(rate < 1, region == "Northeast" | region == "West")
+```
+Reset dataset “US murders” ke tabel aslinya dengan melakukan update dengan perintah:
+data(murders). Gunakan operator pipe untuk membuat data frame baru dengan nama
+‘my_states’ yang hanya berisi negara-negara di regional Northeast atau Eastwest yang
+memiliki tingkat pembunuhan kurang dari 1, dan hanya menampilkan kolom: state, tingkat,
+dan rate. Script yang dibuat seharusnya terdiri dari empat komponen yang dipisahkan
+oleh tiga %>%. Seperti contoh kerangka ini:
+```{r}
+data(murders)
+my_states <- murders %>%
+mutate(rate = total/population*100000, rank = rank(total)) %>%
+filter(rate < 1, region == "Northeast" | region == "Eastwest") %>%
+select(state, rank, rate)
+print(my_states)
+```

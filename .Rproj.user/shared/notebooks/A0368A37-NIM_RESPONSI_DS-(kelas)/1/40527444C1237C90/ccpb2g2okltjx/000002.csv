@@ -1,0 +1,2 @@
+"0","googleplay <- arrange(googleplay, Rating)"
+"0","head(googleplay, n = 10)"

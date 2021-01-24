@@ -1,0 +1,37 @@
+library(knitr)
+library(tidyr)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(tibble)
+library(stringr)
+library(gridExtra)
+library(scales)
+library(lubridate)
+library(ggrepel)
+library(kableExtra)
+library(tm)
+library(wordcloud2)
+library(wordcloud)
+library(tidytext)
+library(broom)
+library(topicmodels)
+library(here)
+library(vroom)
+tweets <- vroom(here("Data&Clasifier","tweets.csv"))
+
+tweets$time <- ymd_hms(tweets$time)
+kable(tweets %>% group_by(lang) %>% count() %>% rename(Language = lang, 'Number of Tweets' = n))
+
+tweets <- tweets %>% filter(lang != "es")
+
+tweets$handle <- sub("realDonaldTrump", "Trump", tweets$handle)
+tweets$handle <- sub("HillaryClinton", "Clinton", tweets$handle)
+tweets$is_retweet <- as.logical(tweets$is_retweet)
+
+kable(tweets %>% filter(is_retweet==FALSE) %>% group_by(handle) %>% count())
+tweets$author <- ifelse(tweets$original_author != "", tweets$original_author, tweets$handle)
+datantah<-head(tweets %>% select(author, handle, text), 20)
+
+
+

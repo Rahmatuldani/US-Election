@@ -1,0 +1,8 @@
+"0","new_app <- inner_join(googleplay, googleplaystore_user_reviews , by = ""App"") %>%"
+"0","  select(App, Rating, Sentiment) %>%"
+"0","  group_by_all() %>%"
+"0","  filter(Sentiment == ""Positive"") %>%"
+"0","  summarise(Jumlah_Review = n())"
+"2","`summarise()` regrouping output by 'App', 'Rating' (override with `.groups` argument)
+"
+"0","new_app"

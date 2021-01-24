@@ -1,0 +1,6 @@
+"0","nrc_n <- tidy_user_reviews %>% "
+"0","  inner_join(get_sentiments(""nrc"")) %>%"
+"0","  count(sentiment, sort = TRUE)"
+"2","Joining, by = ""word""
+"
+"0","nrc_n"

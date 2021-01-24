@@ -1,0 +1,42 @@
+"0","library(tidyverse)"
+"2","Registered S3 methods overwritten by 'dbplyr':
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+"
+"2","[30m-- [1mAttaching packages[22m --------------------------------------------------------------- tidyverse 1.3.0 --[39m
+"
+"2","[30m[32mv[30m [34mggplot2[30m 3.3.2     [32mv[30m [34mpurrr  [30m 0.3.4
+[32mv[30m [34mtibble [30m 3.0.3     [32mv[30m [34mdplyr  [30m 1.0.2
+[32mv[30m [34mtidyr  [30m 1.1.2     [32mv[30m [34mstringr[30m 1.4.0
+[32mv[30m [34mreadr  [30m 1.4.0     [32mv[30m [34mforcats[30m 0.5.0[39m
+"
+"2","[30m-- [1mConflicts[22m ------------------------------------------------------------------ tidyverse_conflicts() --
+[31mx[30m [34mdplyr[30m::[32mfilter()[30m masks [34mstats[30m::filter()
+[31mx[30m [34mdplyr[30m::[32mlag()[30m    masks [34mstats[30m::lag()[39m
+"
+"0","library(vroom)"
+"0","library(tidytext)"
+"0","library(here)"
+"2","here() starts at D:/ML
+"
+"0","user_reviews <- vroom(here(""googleplaystore.csv""))"
+"2","[1mRows:[22m 8,196
+[1mColumns:[22m 13
+[1mDelimiter:[22m "",""
+[31mchr[39m [11]: App, Category, Size, Installs, Type, Price, Content Rating, Genres, Last Updated, Current Ver, Android Ver
+[32mdbl[39m [ 2]: Rating, Reviews
+
+[90mUse `spec()` to retrieve the guessed column specification[39m
+[90mPass a specification to the `col_types` argument to quiet this message[39m
+"
+"0","googleplaystore <- vroom(here(""googleplaystore_user_reviews.csv""))"
+"2","[1mRows:[22m 64,295
+[1mColumns:[22m 5
+[1mDelimiter:[22m "",""
+[31mchr[39m [3]: App, Translated_Review, Sentiment
+[32mdbl[39m [2]: Sentiment_Polarity, Sentiment_Subjectivity
+
+[90mUse `spec()` to retrieve the guessed column specification[39m
+[90mPass a specification to the `col_types` argument to quiet this message[39m
+"

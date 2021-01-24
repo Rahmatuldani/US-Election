@@ -1,0 +1,24 @@
+{
+    "id": "6721519B",
+    "path": "~/R/Us_election_project/app.R",
+    "project_path": "app.R",
+    "type": "r_source",
+    "hash": "2352966527",
+    "contents": "",
+    "dirty": false,
+    "created": 1611472515558.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "cursorPosition": "182,9",
+        "scrollLine": "173"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1611473613,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1611473613220,
+    "read_only": false,
+    "read_only_alternatives": []
+}

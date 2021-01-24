@@ -1,0 +1,6 @@
+"0","cleaned_text <- data3 %>%"
+"0","group_by(App) %>%"
+"0","filter(Translated_Review == """")%>%"
+"0","ungroup()"
+"2","Error in group_by(., App) : object 'data3' not found
+"

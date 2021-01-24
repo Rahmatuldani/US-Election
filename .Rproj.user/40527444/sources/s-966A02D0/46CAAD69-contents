@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+library(knitr)
+library(tidyr)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(tibble)
+library(stringr)
+library(gridExtra)
+library(scales)
+library(lubridate)
+library(ggrepel)
+library(reshape2)
+library(kableExtra)
+library(tm)
+library(wordcloud)
+library(topicmodels)
+library(tidytext)
+library(broom)
+```
+```{r}
+biden <- read.csv(file = "D:/ML/hashtag_joebiden.csv", header = T)
+head(biden)
+```
+```{r}
+trump <- read.csv(file = "D:/ML/hashtag_donaldtrump.csv", header = T)
+head(trump)
+```
+```{r}
+data<- rbind(biden, trump)
+head(data)
+```
+
+# Explorating Data Analysis (EDA)
+## ymd_hms
+untuk mengubah tipe data pada kolom created_at digunakan fungsi ymd_hms serta melihat struktur data dari data set
+```{r}
+data$created_at <- ymd_hms(data$created_at)
+glimpse(data)
+```
+
+```{r}
+bdf<-data.drop('tweet_id','collected_at','user_description','collected_at')
+```
+
+
+
+
+
+
+
+

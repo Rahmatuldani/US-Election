@@ -1,0 +1,75 @@
+---
+title: "Project"
+author: "Jerrycho 123180036"
+date: "1/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)  
+library(dplyr)
+library(cluster)    # Algoritma klastering
+library(factoextra) # Algoritma klastering dan visualisasi
+```
+
+```{r}
+data <- read.csv(file = "D:/R/heart.csv", header = T)
+str(data)
+```
+```{r}
+head(data)
+```
+```{r}
+data1 <- na.omit(data) #untuk menghilangkan data missing
+summary(data1)
+```
+```{r}
+data1 <- na.omit(data) #untuk menghilangkan data missing
+summary(data1)
+```
+```{r}
+datafix <- scale(data1) #standarisasi data
+fviz_nbclust(datafix, kmeans, method = "wss") # metode elbow
+```
+```{r}
+fviz_nbclust(datafix, kmeans, method = "silhouette") # metode silhouette
+```
+```{r}
+set.seed(123)
+gap_stat <- clusGap(datafix, FUN = kmeans, nstart = 25,
+                    K.max = 10, B = 50) # metode gap statistic
+fviz_gap_stat(gap_stat)
+```
+```{r}
+final <- kmeans(datafix, 3, nstart = 25)
+print(final)
+```
+```{r}
+fviz_cluster(final, data = datafix)
+```
+```{r}
+akhir<-data %>% mutate(Cluster = final$cluster)
+```
+```{r}
+data %>% mutate(Cluster = final$cluster)  %>%
+group_by(Cluster) %>%
+summarise_all("mean") %>%
+select(target,Cluster)
+```
+```{r}
+akhir %>% mutate(Sentimen = case_when (
+                Cluster == "1" ~ "Sedang",
+                Cluster == "2" ~ "Rendah",
+                Cluster == "3" ~ "Tinggi"
+                )) 
+      
+```
+
+Berdasarkan hasil diatas, maka dapat dilakukan profilisasi tiap kelompok yang terbentuk. Dimana pada klaster 3 merupakan daerah pasien yang memiliki tingkat terkena serangan jantung paling tinggi dari klaster yg lain dengan nilai sebesar 0.93 . Sedangkan klaster 2 menjadi yang terendah serangan jantung.
+
+Dan aku masih buat gini make metode cluster itu harusmnya dibagi bagi lagi setiao cluster menjadi lebih kecil,coba gimana menurutmu
+

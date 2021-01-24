@@ -1,0 +1,6 @@
+"0","tidy_user_reviews <- joining_data %>%"
+"0","  filter(Translated_Review != ""nan"") %>%"
+"0","  unnest_tokens(word, Translated_Review) %>%"
+"0","  anti_join(stop_words) "
+"2","Joining, by = ""word""
+"
